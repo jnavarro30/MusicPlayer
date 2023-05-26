@@ -59,9 +59,9 @@ const timeUpdateHandler = (e: any) => {
 </script>
 
 <template>
-  <div class="App">
+  <div class="App" :class="libraryStatus ? 'library-active' : ''">
     <h1>Music Player</h1>
-    <Nav />
+    <Nav :libraryStatus="libraryStatus" :setLibraryStatus="setLibraryStatus"/>
   </div>
 </template>
 
