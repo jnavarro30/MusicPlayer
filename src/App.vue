@@ -1,47 +1,95 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+// import HelloWorld from './components/HelloWorld.vue'
+// import TheWelcome from './components/TheWelcome.vue'
+import Nav from './components/Nav.vue'
+import { ref } from 'vue';
+import chillHop from './data.js';
+import TrackType from './types/TrackType';
+import TrackInfoType from './types/TrackInfoType';
+import { playAudio } from './utils/playAudio';
+
+const audioRef = ref(null);
+const tracks = ref([]);
+const setTracks = () => {
+  tracks.value = chillHop();
+}
+const currentTrack = ref<TrackType>();
+const setCurrentTrack = (track: TrackType) => {
+  currentTrack.value = track;
+}
+
+const isPlaying = ref(false);
+const setIsPlaying = (playing: boolean) => {
+  isPlaying.value = playing;
+}
+
+const trackInfo = ref({});
+const setTrackInfo = (info: TrackInfoType) => {
+  trackInfo.value = info;
+}
+
+const libraryStatus = ref(false);
+const setLibraryStatus = (status: boolean) => {
+  libraryStatus.value = status;
+}
+
+const timeUpdateHandler = (e: any) => {
+    const current = e.target.currentTime;
+    const duration = e.target.duration;
+
+    const roundedCurrent = Math.round(current);
+    const roundedDuration = Math.round(duration);
+    const percentage = Math.round((roundedCurrent / roundedDuration) * 100);
+    setTrackInfo({
+      ...trackInfo,
+      currentTime: current,
+      duration: duration,
+      animationPercentage: percentage,
+      volume: e.target.volume,
+    });
+  };
+
+  const songEndHandler = async () => {
+    let currentIndex = tracks.findIndex((track) => track.id === currentTrack.id);
+    await setCurrentTrack(tracks[(currentIndex + 1) % tracks.length]);
+    playAudio(isPlaying, audioRef);
+    return;
+  };
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="App">
+    <h1>Music Player</h1>
+    <Nav />
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+body {
+  font-family: "Lato", sans-serif;
+}
+.App {
+  transition: all 0.5s ease;
+}
+.library-active {
+  margin-left: 30%;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+h1 {
+  font-size: 1rem;
+}
+h2 {
+  color: rgb(51, 51, 51);
+}
+h3, h4 {
+  color: rgb(100, 100, 100);
+  font-weight: 400;
 }
 </style>
