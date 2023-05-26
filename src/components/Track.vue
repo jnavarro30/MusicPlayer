@@ -1,13 +1,18 @@
 <script setup lang="ts">
 // currentTrack
 // isPlaying
+import TrackType from '@/types/TrackType';
+defineProps({
+  isPlaying: Boolean,
+  currentTrack: Object as TrackType,
+})
 </script>
 
 <template>
     <div class="track-container">
-        <img src="" alt="track cover">
-        <h2>Name</h2>
-        <h3>Artist</h3>
+        <img :class="isPlaying ? 'rotateTrack' : ''" :src="currentTrack.cover" alt="track cover">
+        <h2>{{ currentTrack.name }}</h2>
+        <h3>{{ currentTrack.artist }}</h3>
     </div>
 </template>
 

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // import HelloWorld from './components/HelloWorld.vue'
 // import TheWelcome from './components/TheWelcome.vue'
-import Nav from './components/Nav.vue'
+import Nav from './components/Nav.vue';
+import Track from './components/Track.vue';
 import { ref } from 'vue';
 import chillHop from './data.js';
 import TrackType from './types/TrackType';
@@ -9,14 +10,15 @@ import TrackInfoType from './types/TrackInfoType';
 import { playAudio } from './utils/playAudio';
 
 const audioRef = ref(null);
-const tracks = ref([]);
-const setTracks = () => {
-  tracks.value = chillHop();
+const tracks = ref(chillHop());
+const setTracks = (newTracks: []) => {
+  tracks.value = newTracks;
 }
-const currentTrack = ref<TrackType>();
+const currentTrack = ref<TrackType>(tracks.value[0]);
 const setCurrentTrack = (track: TrackType) => {
   currentTrack.value = track;
 }
+console.log(currentTrack.value, 'slkfhdks')
 
 const isPlaying = ref(false);
 const setIsPlaying = (playing: boolean) => {
@@ -62,6 +64,7 @@ const timeUpdateHandler = (e: any) => {
   <div class="App" :class="libraryStatus ? 'library-active' : ''">
     <h1>Music Player</h1>
     <Nav :libraryStatus="libraryStatus" :setLibraryStatus="setLibraryStatus"/>
+    <Track :isPlaying="isPlaying" :currentTrack="currentTrack"/>
   </div>
 </template>
 
