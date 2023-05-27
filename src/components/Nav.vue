@@ -3,7 +3,7 @@ defineProps({
   libraryStatus: Boolean,
   setLibraryStatus: {
     type: Function,
-    default: () => String,
+    default: () => {},
   }
 })
 </script>
@@ -33,11 +33,12 @@ button {
   padding: 0.5rem;
   border: 2px solid rgb(65, 65, 65);
   transition: all 0.3s ease;
-  /* &:hover {
-      background: rgb(65, 65, 65);
-      color: white;
-    } */
 }
+
+/* button:hover {
+  background: rgb(65, 65, 65);
+  color: white;
+} */
 
 .library-active {
   background: rgb(65, 65, 65);

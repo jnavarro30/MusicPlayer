@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
-function chillHop() {
-  return [
+import type TrackType from "./types/TrackType"
+
+const chillHop: TrackType[] = [
     {
       name: "Beaver Creek",
       cover:
@@ -63,6 +64,5 @@ function chillHop() {
     },
     //ADD MORE HERE
   ];
-}
 
 export default chillHop;

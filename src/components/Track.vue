@@ -1,10 +1,10 @@
 <script setup lang="ts">
 // currentTrack
 // isPlaying
-import TrackType from '@/types/TrackType';
+import type TrackType from '@/types/TrackType';
 defineProps({
   isPlaying: Boolean,
-  currentTrack: Object as TrackType,
+  currentTrack: Object as PropType<TrackType>
 })
 </script>
 

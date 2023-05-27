@@ -1,70 +1,31 @@
 <script setup lang="ts">
-// import HelloWorld from './components/HelloWorld.vue'
-// import TheWelcome from './components/TheWelcome.vue'
 import Nav from './components/Nav.vue';
 import Track from './components/Track.vue';
+import Player from './components/Player.vue';
 import { ref } from 'vue';
-import chillHop from './data.js';
-import TrackType from './types/TrackType';
-import TrackInfoType from './types/TrackInfoType';
-import { playAudio } from './utils/playAudio';
+import chillHop from './data';
 
-const audioRef = ref(null);
-const tracks = ref(chillHop());
-const setTracks = (newTracks: []) => {
-  tracks.value = newTracks;
-}
-const currentTrack = ref<TrackType>(tracks.value[0]);
-const setCurrentTrack = (track: TrackType) => {
-  currentTrack.value = track;
-}
-console.log(currentTrack.value, 'slkfhdks')
-
+const tracks = ref(chillHop);
+const currentTrack = ref(tracks.value[0])
+const trackInfo = ref({
+  currentTime: 0,
+  duration: 0,
+  animationPercentage: 0,
+  volume: 0
+})
 const isPlaying = ref(false);
-const setIsPlaying = (playing: boolean) => {
-  isPlaying.value = playing;
-}
-
-const trackInfo = ref({});
-const setTrackInfo = (info: TrackInfoType) => {
-  trackInfo.value = info;
-}
-
 const libraryStatus = ref(false);
 const setLibraryStatus = (status: boolean) => {
   libraryStatus.value = status;
 }
 
-const timeUpdateHandler = (e: any) => {
-    const current = e.target.currentTime;
-    const duration = e.target.duration;
-
-    const roundedCurrent = Math.round(current);
-    const roundedDuration = Math.round(duration);
-    const percentage = Math.round((roundedCurrent / roundedDuration) * 100);
-    setTrackInfo({
-      ...trackInfo,
-      currentTime: current,
-      duration: duration,
-      animationPercentage: percentage,
-      volume: e.target.volume,
-    });
-  };
-
-  const songEndHandler = async () => {
-    let currentIndex = tracks.findIndex((track) => track.id === currentTrack.id);
-    await setCurrentTrack(tracks[(currentIndex + 1) % tracks.length]);
-    playAudio(isPlaying, audioRef);
-    return;
-  };
-
 </script>
 
 <template>
   <div class="App" :class="libraryStatus ? 'library-active' : ''">
-    <h1>Music Player</h1>
     <Nav :libraryStatus="libraryStatus" :setLibraryStatus="setLibraryStatus"/>
     <Track :isPlaying="isPlaying" :currentTrack="currentTrack"/>
+    <Player :trackInfo="trackInfo"/>
   </div>
 </template>
 
