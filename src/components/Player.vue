@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { playAudio } from '@/utils/playAudio';
+import type TrackInfoType from '@/types/TrackInfoType';
 
 defineProps({
-  trackInfo: Object,
+  trackInfo: Object as PropType<TrackInfoType>,
 })
 
 const getTime = (time: number) => {
-    return Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2)
-  }
+  return Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2)
+}
 
   // const trackAnim = {
   //   transform: `translateX(${songInfo.animationPercentage}%)`,
@@ -18,6 +19,7 @@ const getTime = (time: number) => {
 <template>
     <div class="player">
       <div class="time-control">
+        <p>{{  trackInfo }}</p>
         <p>{{ getTime(12345) }}</p>
         <div
           style="background: linear-gradient(to right, #205950, #2ab3bf)"

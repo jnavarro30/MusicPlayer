@@ -1,4 +1,4 @@
-export const playAudio = (isPlaying: boolean, audioRef: any) => {
+export const playAudio = (isPlaying: any, audioRef: any) => {
     if (isPlaying) {
       const playPromise = audioRef.play();
       if (playPromise !== undefined) {
