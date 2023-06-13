@@ -1,40 +1,71 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { type PropType, ref, onMounted, watchEffect, watch } from 'vue';
 import { playAudio } from '@/utils/playAudio';
 import type TrackInfoType from '@/types/TrackInfoType';
+import type TrackType from '@/types/TrackType';
 
 defineProps({
   trackInfo: Object as PropType<TrackInfoType>,
+  // setTrackInfo: {
+  //   type: Function,
+  //   default: () => {}
+  // }, 
+  isPlaying: Boolean,
+  setIsPlaying: {
+    type: Function,
+    default: () => {}
+  },
+  currentTrack: Object as PropType<TrackType>,
+  // setCurrentTrack: {
+  //   type: Function,
+  //   default: () => {}
+  // },
+  // tracks: [] as PropType,
+  // setTracks: {
+  //   type: Function,
+  //   default: () => {}
+  // },
 })
 
-const getTime = (time: number) => {
-  return Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2)
-}
+const audioRef = ref<any>(null);
+// const setIsPlaying = ref(setIsPlaying);
 
-  // const trackAnim = {
-  //   transform: `translateX(${songInfo.animationPercentage}%)`,
-  // };
+
+// const trackInfo = ref(trackInfo);
+// const currentTrack = ref(currentTrack);
+
+
+onMounted(() => {
+  console.log(audioRef.value, 'hflsdhf')
+})
+
+watchEffect(() => {
+  if (audioRef.value) {
+    console.log(audioRef.value.paused, 'hahhahha')
+  }
+})
+
+watch(audioRef, () => {
+  if (audioRef.value) {
+    console.log(audioRef.value.paused, 'hahhahha')
+    // setIsPlaying(audioRef.value.paused);
+  }
+})
+
 </script>
 
 <template>
-    <div class="player">
-      <div class="time-control">
-        <p>{{  trackInfo }}</p>
-        <p>{{ getTime(12345) }}</p>
-        <div
+  <!-- <div
           style="background: linear-gradient(to right, #205950, #2ab3bf)"
           class="track"
-        >
-          <!-- <input
-            value={songInfo.currentTime}
-            type="range"
-            max={songInfo.duration || 0}
-            min={0}
-            onChange={dragHandler}
-          /> -->
-          <div style={trackAnim} class="animate-track"></div>
-        </div>
-      </div>
+        > -->
+    <div class="player">
+      <audio
+      controls
+      ref="audioRef"
+      >
+    <source :src="currentTrack?.audio" type="audio/mpeg" />
+  </audio>
     </div>
 </template>
 

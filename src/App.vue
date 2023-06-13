@@ -9,7 +9,7 @@ import type TrackType from './types/TrackType';
 import type TrackInfoType from './types/TrackInfoType';
 import { playAudio } from './utils/playAudio';
 
-const audioRef = ref();
+const audioRef = ref<any>("audio");
 const tracks = ref(chillHop);
 const setTracks = (newTracks: TrackType[]) => {
   tracks.value = newTracks;
@@ -36,7 +36,6 @@ const setLibraryStatus = (status: boolean) => {
   libraryStatus.value = status;
 }
 
-
 const timeUpdateHandler = (e: any) => {
     const current = e.target.currentTime;
     const duration = e.target.duration;
@@ -54,13 +53,11 @@ const timeUpdateHandler = (e: any) => {
   };
 
   const trackEndHandler = async () => {
-    let currentIndex = tracks.findIndex((track) => track.id === currentTrack.value.id);
-    console.log(currentIndex, 'the index')
-    setCurrentTrack(tracks[(currentIndex + 1) % tracks.length]);
+    let currentIndex = tracks.value.findIndex((track: any) => track.id === currentTrack.value.id);
+    setCurrentTrack(tracks.value[(currentIndex + 1) % tracks.value.length]);
     playAudio(isPlaying, audioRef);
     return;
   };
-
 </script>
 
 <template>
@@ -76,6 +73,7 @@ const timeUpdateHandler = (e: any) => {
       :setCurrentTrack="setCurrentTrack"
       :tracks="tracks"
       :setTracks="setTracks"
+
     />
     <Library 
       :tracks="tracks"
@@ -85,14 +83,16 @@ const timeUpdateHandler = (e: any) => {
       :setTracks="setTracks"
       :libraryStatus="libraryStatus"
     />
-    <audio
-      ref="audio" 
+    <!-- <audio
+      controls
+      :ref="audioRef" 
       :src="currentTrack.audio"
       :on-loadedmetadata="timeUpdateHandler"
       :on-timeupdate="timeUpdateHandler"
       :on-ended="trackEndHandler"
     >
-  </audio>
+    <source :src="currentTrack.audio" type="audio/mpeg" />
+  </audio> -->
   </div>
 </template>
 
