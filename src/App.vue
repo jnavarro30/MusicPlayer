@@ -65,6 +65,11 @@ const timeUpdateHandler = (e: any) => {
     <Nav :libraryStatus="libraryStatus" :setLibraryStatus="setLibraryStatus"/>
     <Track :isPlaying="isPlaying" :currentTrack="currentTrack"/>
     <Player 
+      :isPlaying="isPlaying"
+      :setIsPlaying="setIsPlaying"
+      :currentTrack="currentTrack"
+    />
+    <!-- <Player 
       :trackInfo="trackInfo"
       :setTrackInfo="setTrackInfo"
       :isPlaying="isPlaying"
@@ -74,7 +79,7 @@ const timeUpdateHandler = (e: any) => {
       :tracks="tracks"
       :setTracks="setTracks"
 
-    />
+    /> -->
     <Library 
       :tracks="tracks"
       :setCurrentTrack="setCurrentTrack"

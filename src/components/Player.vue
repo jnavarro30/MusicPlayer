@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { type PropType, ref, onMounted, watchEffect, watch } from 'vue';
-import { playAudio } from '@/utils/playAudio';
-import type TrackInfoType from '@/types/TrackInfoType';
+// import { playAudio } from '@/utils/playAudio';
+// import type TrackInfoType from '@/types/TrackInfoType';
 import type TrackType from '@/types/TrackType';
 
-defineProps({
-  trackInfo: Object as PropType<TrackInfoType>,
+const props = defineProps({
+  // trackInfo: Object as PropType<TrackInfoType>,
   // setTrackInfo: {
   //   type: Function,
   //   default: () => {}
@@ -28,29 +28,32 @@ defineProps({
 })
 
 const audioRef = ref<any>(null);
-// const setIsPlaying = ref(setIsPlaying);
 
-
+// const clickHandler = () => {
+//   console.log("it's the click handler")
+// }
 // const trackInfo = ref(trackInfo);
 // const currentTrack = ref(currentTrack);
 
 
-onMounted(() => {
-  console.log(audioRef.value, 'hflsdhf')
-})
+// onMounted(() => {
+//   console.log(audioRef.value, 'hflsdhf')
+//   props.setIsPlaying(!audioRef.value.paused);
+// })
 
-watchEffect(() => {
-  if (audioRef.value) {
-    console.log(audioRef.value.paused, 'hahhahha')
-  }
-})
+// watchEffect(() => {
+//   if (audioRef.value) {
+//     console.log(audioRef.value.paused, 'bindu')
+//     props.setIsPlaying(!audioRef.value.paused);
+//   }
+// })
 
-watch(audioRef, () => {
-  if (audioRef.value) {
-    console.log(audioRef.value.paused, 'hahhahha')
-    // setIsPlaying(audioRef.value.paused);
-  }
-})
+// watch(props.isPlaying, () => {
+//   if (audioRef.value) {
+//     console.log(audioRef.value.paused, 'hahhahha')
+//     props.setIsPlaying(!audioRef.value.paused);
+//   }
+// })
 
 </script>
 
@@ -63,6 +66,8 @@ watch(audioRef, () => {
       <audio
       controls
       ref="audioRef"
+      @play="setIsPlaying(true)"
+      @pause="setIsPlaying(false)"
       >
     <source :src="currentTrack?.audio" type="audio/mpeg" />
   </audio>
