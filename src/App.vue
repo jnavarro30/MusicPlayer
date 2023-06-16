@@ -23,11 +23,18 @@ const libraryStatus = ref(false);
 const setLibraryStatus = (status: boolean) => {
   libraryStatus.value = status;
 }
+
+const darkView = ref(false);
+const setDarkView = (view: boolean) => {
+  darkView.value = view;
+}
 </script>
 
 <template>
-  <div class="App" :class="libraryStatus ? 'library-active' : ''">
-    <Nav :libraryStatus="libraryStatus" :setLibraryStatus="setLibraryStatus"/>
+  <div class="App" :class="{ libraryActive: libraryStatus, dark: darkView }">
+    <font-awesome-icon id="dark-view-icon" :class="{ hide: darkView }" icon="fa-solid fa-moon" fade @click="setDarkView(true)"/>
+    <font-awesome-icon id="dark-view-icon" :class="darkView ? '' : 'hide'" icon="fa-solid fa-sun" fade @click="setDarkView(false)"/>
+    <Nav :libraryStatus="libraryStatus" :setLibraryStatus="setLibraryStatus" :darkView="darkView" />
     <div class="track-container">
         <img :class="isPlaying ? 'rotateTrack' : ''" :src="currentTrack?.cover" alt="track cover">
         <h2>{{ currentTrack?.name }}</h2>
@@ -50,11 +57,31 @@ const setLibraryStatus = (status: boolean) => {
       :setTracks="setTracks"
       :libraryStatus="libraryStatus"
       :audioRef="audioRef"
+      :darkView="darkView"
     />
   </div>
 </template>
 
 <style scoped>
+.hide {
+  display: none;
+}
+.dark {
+  background: black;
+  color: white;
+  transition: all 0.75s ease-out;
+}
+.light {
+  color: black;
+}
+
+#dark-view-icon {
+  position: absolute;
+  margin-left: 96%;
+  margin-top: 1%;
+  cursor: pointer;
+  font-size: 1.4rem;
+}
   * {
   margin: 0;
   padding: 0;
@@ -64,7 +91,10 @@ body {
   font-family: "Lato", sans-serif;
 }
 .App {
+  position: relative;
   transition: all 0.5s ease;
+  height: 100%;
+  overflow: hidden;
 }
 .player {
   min-height: 20vh;
@@ -88,16 +118,7 @@ body {
   pointer-events: none;
 } */
 
-input[type="range"]:focus {
-  outline: none;
-}
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  height: 16px;
-  width: 16px;
-}
-
-.library-active {
+.libraryActive {
   margin-left: 30%;
 }
 .track-container {
@@ -106,6 +127,7 @@ input[type="range"]::-webkit-slider-thumb {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: all 0.75s ease-out;
 }
 img {
     width: 25%;

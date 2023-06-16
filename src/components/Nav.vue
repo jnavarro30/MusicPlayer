@@ -4,14 +4,15 @@ defineProps({
   setLibraryStatus: {
     type: Function,
     default: () => {},
-  }
+  },
+  darkView: Boolean
 })
 </script>
 
 <template>
   <nav>
     <h1>Waves</h1>
-    <button :class="libraryStatus ? 'library-active' : ''" @click="setLibraryStatus(!libraryStatus)">
+    <button :class="{ libraryActive: libraryStatus, dark: darkView }" @click="setLibraryStatus(!libraryStatus)">
       Library 
       <font-awesome-icon icon="fa-solid fa-music" />
     </button>
@@ -40,8 +41,13 @@ button {
   color: white;
 } */
 
-.library-active {
+.libraryActive {
   background: rgb(65, 65, 65);
+  color: white;
+}
+
+.dark {
+  background: black;
   color: white;
 }
 

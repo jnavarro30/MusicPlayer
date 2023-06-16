@@ -14,7 +14,8 @@ const props = defineProps({
     },
     libraryStatus: Boolean,
     audioRef: HTMLAudioElement,
-    currentTrack: {}
+    currentTrack: {},
+    darkView: Boolean
 })
 
 const clickHandler = (track: any) => {
@@ -26,7 +27,7 @@ const clickHandler = (track: any) => {
 <template>
     <div
     class="library"
-    :class="libraryStatus ? 'active-library' : ''"
+    :class="{ activeLibrary: libraryStatus, dark: darkView }"
     >
         <h2>Library</h2>
         <div class="library-tracks">
@@ -57,7 +58,7 @@ const clickHandler = (track: any) => {
     position: fixed;
     top: 0;
     left: 0;
-    width: 20rem;
+    width: 21rem;
     height: 100%;
     box-shadow: 2px 2px 50px rgb(221, 221, 221);
     overflow: scroll;
@@ -66,7 +67,7 @@ const clickHandler = (track: any) => {
     opacity: 0;
 }
 
-.active-library {
+.activeLibrary {
   transform: translateX(0%);
   opacity: 1;
 }
@@ -80,6 +81,7 @@ h2 {
     padding: 0.2rem;
     cursor: pointer;
     transition: all 0.75s ease-out;
+    width: 100%;
 }
 img {
     width: 30%;
@@ -111,5 +113,9 @@ h3 {
 
   .selected {
   background: rgb(194, 208, 253);
+}
+.dark {
+  background: black;
+  color: white;
 }
 </style>
