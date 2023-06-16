@@ -1,60 +1,21 @@
 <script setup lang="ts">
 import { type PropType, ref, onMounted, watchEffect, watch } from 'vue';
-// import { playAudio } from '@/utils/playAudio';
-// import type TrackInfoType from '@/types/TrackInfoType';
 import type TrackType from '@/types/TrackType';
 
 const props = defineProps({
-  // trackInfo: Object as PropType<TrackInfoType>,
-  // setTrackInfo: {
-  //   type: Function,
-  //   default: () => {}
-  // }, 
+  audioRef: HTMLAudioElement,
   isPlaying: Boolean,
   setIsPlaying: {
     type: Function,
     default: () => {}
   },
   currentTrack: Object as PropType<TrackType>,
-  // setCurrentTrack: {
-  //   type: Function,
-  //   default: () => {}
-  // },
-  // tracks: [] as PropType,
-  // setTracks: {
-  //   type: Function,
-  //   default: () => {}
-  // },
 })
 
-const audioRef = ref<any>(null);
-
-// const clickHandler = () => {
-//   console.log("it's the click handler")
-// }
-// const trackInfo = ref(trackInfo);
-// const currentTrack = ref(currentTrack);
-
-
-// onMounted(() => {
-//   console.log(audioRef.value, 'hflsdhf')
-//   props.setIsPlaying(!audioRef.value.paused);
-// })
-
-// watchEffect(() => {
-//   if (audioRef.value) {
-//     console.log(audioRef.value.paused, 'bindu')
-//     props.setIsPlaying(!audioRef.value.paused);
-//   }
-// })
-
-// watch(props.isPlaying, () => {
-//   if (audioRef.value) {
-//     console.log(audioRef.value.paused, 'hahhahha')
-//     props.setIsPlaying(!audioRef.value.paused);
-//   }
-// })
-
+// const audioRef = ref<any>(null);
+onMounted(() => {
+  console.log(props.audioRef, 'there refy')
+})
 </script>
 
 <template>
