@@ -5,7 +5,8 @@ defineProps({
     type: Function,
     default: () => {},
   },
-  darkView: Boolean
+  darkView: Boolean,
+  isPlaying: Boolean
 })
 </script>
 
@@ -14,7 +15,7 @@ defineProps({
     <h1>Waves</h1>
     <button :class="{ libraryActive: libraryStatus, dark: darkView }" @click="setLibraryStatus(!libraryStatus)">
       Library 
-      <font-awesome-icon icon="fa-solid fa-music" />
+      <font-awesome-icon icon="fa-solid fa-music" :fade="isPlaying"/>
     </button>
   </nav>
 </template>

@@ -32,9 +32,9 @@ const setDarkView = (view: boolean) => {
 
 <template>
   <div class="App" :class="{ libraryActive: libraryStatus, dark: darkView }">
-    <font-awesome-icon id="dark-view-icon" :class="{ hide: darkView }" icon="fa-solid fa-moon" fade @click="setDarkView(true)"/>
-    <font-awesome-icon id="dark-view-icon" :class="darkView ? '' : 'hide'" icon="fa-solid fa-sun" fade @click="setDarkView(false)"/>
-    <Nav :libraryStatus="libraryStatus" :setLibraryStatus="setLibraryStatus" :darkView="darkView" />
+    <font-awesome-icon id="dark-view-icon" :class="{ hide: darkView }" icon="fa-solid fa-moon" :fade="isPlaying" @click="setDarkView(true)"/>
+    <font-awesome-icon id="dark-view-icon" :class="darkView ? '' : 'hide'" icon="fa-solid fa-sun" :fade="isPlaying" @click="setDarkView(false)"/>
+    <Nav :libraryStatus="libraryStatus" :setLibraryStatus="setLibraryStatus" :darkView="darkView" :isPlaying="isPlaying"/>
     <div class="track-container">
         <img :class="isPlaying ? 'rotateTrack' : ''" :src="currentTrack?.cover" alt="track cover">
         <h2>{{ currentTrack?.name }}</h2>
