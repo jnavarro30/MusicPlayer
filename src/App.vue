@@ -93,21 +93,12 @@ const setDarkView = (view: boolean) => {
   color: white;
   transition: all 0.75s ease-out;
 }
-.light {
-  color: black;
-}
-
 #dark-view-icon {
   position: absolute;
   margin-left: 96%;
   margin-top: 1%;
   cursor: pointer;
   font-size: 1.4rem;
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 }
 body {
   font-family: "Lato", sans-serif;
@@ -128,18 +119,6 @@ body {
 .track {
   /* background: linear-gradient(to right, #205950, #2ab3bf); */
 }
-/* .animate-track {
-  background: rgb(204, 204, 204);
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translateX(0%);
-  padding: 1rem;
-  pointer-events: none;
-} */
-
 .libraryActive {
   margin-left: 30%;
 }
@@ -150,9 +129,10 @@ body {
   justify-content: center;
   align-items: center;
   transition: all 0.75s ease-out;
+  /* background: linear-gradient(to right, #205950, #2ab3bf); */
 }
 img {
-  width: 25%;
+  width: 50%;
   border-radius: 50%;
   transition: all 2s ease;
 }

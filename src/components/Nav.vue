@@ -6,16 +6,19 @@ defineProps({
     default: () => {},
   },
   darkView: Boolean,
-  isPlaying: Boolean
-})
+  isPlaying: Boolean,
+});
 </script>
 
 <template>
   <nav>
     <h1>Waves</h1>
-    <button :class="{ libraryActive: libraryStatus, dark: darkView }" @click="setLibraryStatus(!libraryStatus)">
-      Library 
-      <font-awesome-icon icon="fa-solid fa-music" :fade="isPlaying"/>
+    <button
+      :class="{ libraryActive: libraryStatus, dark: darkView }"
+      @click="setLibraryStatus(!libraryStatus)"
+    >
+      Library
+      <font-awesome-icon icon="fa-solid fa-music" :fade="isPlaying" />
     </button>
   </nav>
 </template>
@@ -37,11 +40,6 @@ button {
   transition: all 0.3s ease;
 }
 
-/* button:hover {
-  background: rgb(65, 65, 65);
-  color: white;
-} */
-
 .libraryActive {
   background: rgb(65, 65, 65);
   color: white;
@@ -56,4 +54,5 @@ button {
   button {
     z-index: 10;
   }
-}</style>
+}
+</style>
