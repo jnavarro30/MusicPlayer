@@ -1,44 +1,65 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import chillHop from './data';
-import Nav from './components/Nav.vue';
-import Library from './components/Library.vue';
-import type TrackType from './types/TrackType';
+import { ref } from "vue";
+import chillHop from "./data";
+import Nav from "./components/Nav.vue";
+import Library from "./components/Library.vue";
+import type TrackType from "./types/TrackType";
 
 const audioRef: any = ref(null);
 
 const tracks = ref<TrackType[]>(chillHop);
 const setTracks = (newTracks: TrackType[]) => {
   tracks.value = newTracks;
-}
-const currentTrack = ref<TrackType>(tracks.value[0])
+};
+const currentTrack = ref<TrackType>(tracks.value[0]);
 const setCurrentTrack = (track: TrackType) => {
   currentTrack.value = track;
-}
+};
 const isPlaying = ref(false);
 const setIsPlaying = (play: boolean) => {
   isPlaying.value = play;
-}
+};
 const libraryStatus = ref(false);
 const setLibraryStatus = (status: boolean) => {
   libraryStatus.value = status;
-}
+};
 
 const darkView = ref(false);
 const setDarkView = (view: boolean) => {
   darkView.value = view;
-}
+};
 </script>
 
 <template>
   <div class="App" :class="{ libraryActive: libraryStatus, dark: darkView }">
-    <font-awesome-icon id="dark-view-icon" :class="{ hide: darkView }" icon="fa-solid fa-moon" :fade="isPlaying" @click="setDarkView(true)"/>
-    <font-awesome-icon id="dark-view-icon" :class="darkView ? '' : 'hide'" icon="fa-solid fa-sun" :fade="isPlaying" @click="setDarkView(false)"/>
-    <Nav :libraryStatus="libraryStatus" :setLibraryStatus="setLibraryStatus" :darkView="darkView" :isPlaying="isPlaying"/>
+    <font-awesome-icon
+      id="dark-view-icon"
+      :class="{ hide: darkView }"
+      icon="fa-solid fa-moon"
+      :fade="isPlaying"
+      @click="setDarkView(true)"
+    />
+    <font-awesome-icon
+      id="dark-view-icon"
+      :class="darkView ? '' : 'hide'"
+      icon="fa-solid fa-sun"
+      :fade="isPlaying"
+      @click="setDarkView(false)"
+    />
+    <Nav
+      :libraryStatus="libraryStatus"
+      :setLibraryStatus="setLibraryStatus"
+      :darkView="darkView"
+      :isPlaying="isPlaying"
+    />
     <div class="track-container">
-        <img :class="isPlaying ? 'rotateTrack' : ''" :src="currentTrack?.cover" alt="track cover">
-        <h2>{{ currentTrack?.name }}</h2>
-        <h3>{{ currentTrack?.artist }}</h3>
+      <img
+        :class="isPlaying ? 'rotateTrack' : ''"
+        :src="currentTrack?.cover"
+        alt="track cover"
+      />
+      <h2>{{ currentTrack?.name }}</h2>
+      <h3>{{ currentTrack?.artist }}</h3>
     </div>
     <div class="player">
       <audio
@@ -49,11 +70,12 @@ const setDarkView = (view: boolean) => {
         @pause="setIsPlaying(false)"
       />
     </div>
-    <Library 
+    <Library
       :tracks="tracks"
       :currentTrack="currentTrack"
       :setCurrentTrack="setCurrentTrack"
       :isPlaying="isPlaying"
+      :setIsPlaying="setIsPlaying"
       :setTracks="setTracks"
       :libraryStatus="libraryStatus"
       :audioRef="audioRef"
@@ -82,7 +104,7 @@ const setDarkView = (view: boolean) => {
   cursor: pointer;
   font-size: 1.4rem;
 }
-  * {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -130,20 +152,20 @@ body {
   transition: all 0.75s ease-out;
 }
 img {
-    width: 25%;
-    border-radius: 50%;
-    transition: all 2s ease;
-  }
-  h2 {
-    padding: 3rem 1rem 1rem 1rem;
-  }
-  h3 {
-    font-size: 1rem;
-  }
+  width: 25%;
+  border-radius: 50%;
+  transition: all 2s ease;
+}
+h2 {
+  padding: 3rem 1rem 1rem 1rem;
+}
+h3 {
+  font-size: 1rem;
+}
 @media screen and (max-width: 768px) {
-    img {
-      width: 60%;
-    }
+  img {
+    width: 60%;
+  }
 }
 
 @keyframes rotate {
