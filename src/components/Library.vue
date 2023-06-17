@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import LibraryTrack from './LibraryTrack.vue';
+import { TrackOpTypes, type PropType } from 'vue';
+import type TrackType from '../types/TrackType'; 
 const props = defineProps({
-    tracks: [],
+    tracks: Array as PropType<TrackType[]>,
     setCurrentTrack: {
         type: Function,
         default: () => {}
@@ -14,13 +14,13 @@ const props = defineProps({
     },
     libraryStatus: Boolean,
     audioRef: HTMLAudioElement,
-    currentTrack: {},
+    currentTrack: {} as PropType<TrackType>,
     darkView: Boolean
 })
 
 const clickHandler = (track: any) => {
     props.setCurrentTrack(track);
-    console.log(props.currentTrack, 'try me current track')
+    console.log(track, 'try me current track')
 }
 </script>
 
@@ -31,18 +31,7 @@ const clickHandler = (track: any) => {
     >
         <h2>Library</h2>
         <div class="library-tracks">
-            <!-- <LibraryTrack 
-                v-for="track in tracks"
-                :key="track.id"
-                :name="track.name"
-                :artist="track.artist"
-                :audio="track.audio"
-                :cover="track.cover"
-                :active="track.active"
-                :isPlaying="isPlaying"
-                @click="clickHandler(track)"
-            /> -->
-            <div v-for="track in tracks" :class="['library-track', active ? 'selected' : '']">
+            <div v-for="track in tracks" class="libraryTrack" :class=" { selected: track.id == currentTrack?.id }" @click="clickHandler(track)">
                 <img :src="track.cover" alt="track cover" />
                 <div class="track-description">
                     <h3>{{ track.name }}</h3>
@@ -90,7 +79,7 @@ img {
     background: rgb(235, 235, 235);
   }
 
-  .library-track {
+  .libraryTrack {
     display: flex;
     align-items: center;
     padding: 1rem 2rem 1rem 2rem;
