@@ -6,13 +6,16 @@ defineProps({
     default: () => {},
   },
   darkView: Boolean,
+  setDarkView: {
+    type: Function,
+    default: () => {}
+  },
   isPlaying: Boolean,
 });
 </script>
 
 <template>
   <nav>
-    <h1>Waves</h1>
     <button
       :class="{ libraryActive: libraryStatus, dark: darkView }"
       @click="setLibraryStatus(!libraryStatus)"
@@ -20,6 +23,20 @@ defineProps({
       Library
       <font-awesome-icon icon="fa-solid fa-music" :fade="isPlaying" />
     </button>
+    <font-awesome-icon
+      id="dark-view-icon"
+      :class="{ hide: darkView }"
+      icon="fa-solid fa-moon"
+      :fade="isPlaying"
+      @click="setDarkView(true)"
+    />
+    <font-awesome-icon
+      id="dark-view-icon"
+      :class="darkView ? '' : 'hide'"
+      icon="fa-solid fa-sun"
+      :fade="isPlaying"
+      @click="setDarkView(false)"
+    />
   </nav>
 </template>
 
@@ -40,19 +57,22 @@ button {
   transition: all 0.3s ease;
 }
 
+#dark-view-icon {
+  cursor: pointer;
+  font-size: 1.6rem;
+}
+
 .libraryActive {
   background: rgb(65, 65, 65);
   color: white;
 }
 
+.hide {
+  display: none;
+}
 .dark {
   background: black;
   color: white;
-}
-
-@media screen and (max-width: 768px) {
-  button {
-    z-index: 10;
-  }
+  transition: all 0.75s ease-out;
 }
 </style>

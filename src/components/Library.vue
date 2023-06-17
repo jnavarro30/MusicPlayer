@@ -30,10 +30,10 @@ const clickHandler = (track: any) => {
 
 <template>
   <div
+
     class="library"
     :class="{ activeLibrary: libraryStatus, dark: darkView }"
   >
-    <h2>Library</h2>
     <div class="library-tracks">
       <div
         v-for="track in tracks"
@@ -53,15 +53,11 @@ const clickHandler = (track: any) => {
 
 <style scoped>
 .library {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 21rem;
   height: 100%;
-  box-shadow: 2px 2px 50px rgb(221, 221, 221);
+  /* box-shadow: 2px 2px 50px rgb(221, 221, 221); */
   overflow: scroll;
-  transform: translateX(-100%);
-  transition: all 0.5s ease;
+  /* transform: translateX(-100%); */
+  /* transition: all 0.5s ease; */
   opacity: 0;
 }
 

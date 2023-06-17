@@ -32,27 +32,14 @@ const setDarkView = (view: boolean) => {
 
 <template>
   <div class="App" :class="{ libraryActive: libraryStatus, dark: darkView }">
-    <font-awesome-icon
-      id="dark-view-icon"
-      :class="{ hide: darkView }"
-      icon="fa-solid fa-moon"
-      :fade="isPlaying"
-      @click="setDarkView(true)"
-    />
-    <font-awesome-icon
-      id="dark-view-icon"
-      :class="darkView ? '' : 'hide'"
-      icon="fa-solid fa-sun"
-      :fade="isPlaying"
-      @click="setDarkView(false)"
-    />
     <Nav
       :libraryStatus="libraryStatus"
       :setLibraryStatus="setLibraryStatus"
       :darkView="darkView"
+      :setDarkView="setDarkView"
       :isPlaying="isPlaying"
     />
-    <div class="track-container">
+    <div class="track-container" :class="{ hidden: libraryStatus }">
       <img
         :class="isPlaying ? 'rotateTrack' : ''"
         :src="currentTrack?.cover"
@@ -60,8 +47,7 @@ const setDarkView = (view: boolean) => {
       />
       <h2>{{ currentTrack?.name }}</h2>
       <h3>{{ currentTrack?.artist }}</h3>
-    </div>
-    <div class="player">
+      <!-- <div class="player">
       <audio
         controls
         ref="audioRef"
@@ -69,6 +55,7 @@ const setDarkView = (view: boolean) => {
         @play="setIsPlaying(true)"
         @pause="setIsPlaying(false)"
       />
+    </div> -->
     </div>
     <Library
       :tracks="tracks"
@@ -82,65 +69,69 @@ const setDarkView = (view: boolean) => {
       :darkView="darkView"
     />
   </div>
+  <footer class="player">
+    <audio
+        controls
+        ref="audioRef"
+        :src="currentTrack?.audio"
+        @play="setIsPlaying(true)"
+        @pause="setIsPlaying(false)"
+      />
+  </footer>
 </template>
 
 <style scoped>
-.hide {
-  display: none;
-}
-.dark {
-  background: black;
-  color: white;
-  transition: all 0.75s ease-out;
-}
-#dark-view-icon {
+.hidden {
+  visibility: hidden;
   position: absolute;
-  margin-left: 96%;
-  margin-top: 1%;
-  cursor: pointer;
-  font-size: 1.4rem;
+
 }
 body {
   font-family: "Lato", sans-serif;
 }
 .App {
-  position: relative;
+  /* position: relative; */
   transition: all 0.5s ease;
   height: 100%;
   overflow: hidden;
 }
-.player {
-  min-height: 20vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-.track {
-  /* background: linear-gradient(to right, #205950, #2ab3bf); */
-}
-.libraryActive {
+
+/* .libraryActive {
   margin-left: 30%;
-}
+} */
 .track-container {
-  min-height: 60vh;
+  /* min-height: 60vh; */
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  transition: all 0.75s ease-out;
+  /* transition: all 0.5s ease; */
+  /* transition: all 0.75s ease-out; */
   /* background: linear-gradient(to right, #205950, #2ab3bf); */
 }
 img {
+  margin-top: 2rem;
   width: 50%;
   border-radius: 50%;
-  transition: all 2s ease;
+  /* transition: all 2s ease; */
 }
 h2 {
   padding: 3rem 1rem 1rem 1rem;
 }
 h3 {
   font-size: 1rem;
+}
+/* custom audio tag */
+/* https://stackoverflow.com/questions/4126708/is-it-possible-to-style-html5-audio-tag */
+.player {
+  margin-top: 2rem;
+  min-height: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+audio {
+  border: none;
 }
 @media screen and (max-width: 768px) {
   img {
